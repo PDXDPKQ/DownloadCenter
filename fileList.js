@@ -13,7 +13,7 @@
     },
     {
         "name": "fileList.js",
-        "size": "992 B"
+        "size": "1 KB"
     },
     {
         "name": "generate_filelist.py说明书.txt",
