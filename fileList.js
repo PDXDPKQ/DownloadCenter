@@ -4,8 +4,12 @@
 
     const mockFiles = [
     {
+        "name": "auto_push.bat",
+        "size": "88 B"
+    },
+    {
         "name": "fileList.js",
-        "size": "844 B"
+        "size": "1 KB"
     },
     {
         "name": "generate_filelist.py说明书.txt",
@@ -34,10 +38,6 @@
     {
         "name": "警告.md",
         "size": "47 B"
-    },
-    {
-        "name": "贝肯熊2：金牌特工 .mp4",
-        "size": "2.9 GB"
     }
 ];
 
