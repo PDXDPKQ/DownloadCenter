@@ -8,8 +8,12 @@
         "size": "88 B"
     },
     {
+        "name": "CNAME",
+        "size": "19 B"
+    },
+    {
         "name": "fileList.js",
-        "size": "1 KB"
+        "size": "992 B"
     },
     {
         "name": "generate_filelist.py说明书.txt",
