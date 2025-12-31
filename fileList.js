@@ -4,6 +4,10 @@
 
     const mockFiles = [
     {
+        "name": ".git",
+        "size": "文件夹 (12 个项目)"
+    },
+    {
         "name": "auto_push.bat",
         "size": "88 B"
     },
@@ -42,6 +46,10 @@
     {
         "name": "警告.md",
         "size": "47 B"
+    },
+    {
+        "name": "鼠标指针美化图标",
+        "size": "文件夹 (6 个项目)"
     }
 ];
 

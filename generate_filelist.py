@@ -44,7 +44,7 @@ def generate_file_list_js(output_filename="fileList.js", exclude_extensions=None
     print(f"扫描目录: {current_dir}")
     
     # 遍历当前目录的所有文件
-    for item_path in current_dir.iterdir():
+    for file_path in current_dir.iterdir():
         # if file_path.is_file():
             # 检查是否在排除列表中
             if any(str(file_path).endswith(ext) for ext in exclude_extensions):
@@ -63,26 +63,26 @@ def generate_file_list_js(output_filename="fileList.js", exclude_extensions=None
             #     print(f"找到文件: {file_path.name} ({get_readable_size(file_size)})")
 
             try:
-                if item_path.is_file():
+                if file_path.is_file():
                     # 处理文件
-                    file_size = item_path.stat().st_size
-                    items_data.append({
-                        'name': item_path.name,
+                    file_size = file_path.stat().st_size
+                    files_data.append({
+                        'name': file_path.name,
                         'size': get_readable_size(file_size),
                         # 'type': 'file'
                     })
-                    print(f"找到文件: {item_path.name} ({get_readable_size(file_size)})")
+                    print(f"找到文件: {file_path.name} ({get_readable_size(file_size)})")
 
-                elif item_path.is_dir():
+                elif file_path.is_dir():
                     # 处理文件夹
                     # 计算文件夹中的文件数量
-                    file_count = sum(1 for _ in item_path.iterdir())
-                    items_data.append({
-                        'name': item_path.name,
+                    file_count = sum(1 for _ in file_path.iterdir())
+                    files_data.append({
+                        'name': file_path.name,
                         'size': f"文件夹 ({file_count} 个项目)",
                         # 'type': 'folder'
                     })
-                    print(f"找到文件夹: {item_path.name} ({file_count} 个项目)")
+                    print(f"找到文件夹: {file_path.name} ({file_count} 个项目)")
 
 
                 
@@ -136,7 +136,7 @@ def generate_file_list_js(output_filename="fileList.js", exclude_extensions=None
             f.write(js_content)
         
         print(f"\n✅ 成功生成JavaScript文件: {output_filename}")
-        print(f"   包含 {len(items_data)} 个文件")
+        print(f"   包含 {len(files_data)} 个文件")
         return True
         
     except Exception as e:
