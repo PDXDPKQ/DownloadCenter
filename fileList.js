@@ -12,10 +12,6 @@
         "size": "文件夹 (12 个项目)"
     },
     {
-        "name": "1.zip",
-        "size": "9.7 MB"
-    },
-    {
         "name": "auto_push.bat",
         "size": "96 B"
     },
