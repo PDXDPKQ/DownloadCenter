@@ -44,7 +44,7 @@ def generate_file_list_js(output_filename="fileList.js", exclude_extensions=None
     print(f"扫描目录: {current_dir}")
     
     # 遍历当前目录的所有文件
-    for file_path in current_dir.iterdir():
+    for item_path in current_dir.iterdir():
         # if file_path.is_file():
             # 检查是否在排除列表中
             if any(str(file_path).endswith(ext) for ext in exclude_extensions):
