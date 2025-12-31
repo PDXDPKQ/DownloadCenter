@@ -4,12 +4,16 @@
 
     const mockFiles = [
     {
+        "name": ".DS_Store",
+        "size": "6 KB"
+    },
+    {
         "name": ".git",
         "size": "文件夹 (12 个项目)"
     },
     {
         "name": "auto_push.bat",
-        "size": "88 B"
+        "size": "96 B"
     },
     {
         "name": "CNAME",
@@ -38,6 +42,10 @@
     {
         "name": "passwordMap.js",
         "size": "342 B"
+    },
+    {
+        "name": "run.command",
+        "size": "999 B"
     },
     {
         "name": "派蒙.jpg",
