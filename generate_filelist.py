@@ -45,44 +45,44 @@ def generate_file_list_js(output_filename="fileList.js", exclude_extensions=None
     
     # 遍历当前目录的所有文件
     for file_path in current_dir.iterdir():
-        # if file_path.is_file():
+        if file_path.is_file():
             # 检查是否在排除列表中
             if any(str(file_path).endswith(ext) for ext in exclude_extensions):
                 continue
 
-            # try:
-            #     # 获取文件大小
-            #     file_size = file_path.stat().st_size
-            #
-            #     # 添加到文件列表
-            #     files_data.append({
-            #         'name': file_path.name,
-            #         'size': get_readable_size(file_size)
-            #     })
-            #
-            #     print(f"找到文件: {file_path.name} ({get_readable_size(file_size)})")
-
             try:
-                if file_path.is_file():
-                    # 处理文件
-                    file_size = file_path.stat().st_size
-                    files_data.append({
-                        'name': file_path.name,
-                        'size': get_readable_size(file_size),
-                        # 'type': 'file'
-                    })
-                    print(f"找到文件: {file_path.name} ({get_readable_size(file_size)})")
+                # 获取文件大小
+                file_size = file_path.stat().st_size
 
-                elif file_path.is_dir():
-                    # 处理文件夹
-                    # 计算文件夹中的文件数量
-                    file_count = sum(1 for _ in file_path.iterdir())
-                    files_data.append({
-                        'name': file_path.name,
-                        'size': f"文件夹 ({file_count} 个项目)",
-                        # 'type': 'folder'
-                    })
-                    print(f"找到文件夹: {file_path.name} ({file_count} 个项目)")
+                # 添加到文件列表
+                files_data.append({
+                    'name': file_path.name,
+                    'size': get_readable_size(file_size)
+                })
+
+                print(f"找到文件: {file_path.name} ({get_readable_size(file_size)})")
+
+            # try:
+            #     if file_path.is_file():
+            #         # 处理文件
+            #         file_size = file_path.stat().st_size
+            #         files_data.append({
+            #             'name': file_path.name,
+            #             'size': get_readable_size(file_size),
+            #             # 'type': 'file'
+            #         })
+            #         print(f"找到文件: {file_path.name} ({get_readable_size(file_size)})")
+            #
+            #     elif file_path.is_dir():
+            #         # 处理文件夹
+            #         # 计算文件夹中的文件数量
+            #         file_count = sum(1 for _ in file_path.iterdir())
+            #         files_data.append({
+            #             'name': file_path.name,
+            #             'size': f"文件夹 ({file_count} 个项目)",
+            #             # 'type': 'folder'
+            #         })
+            #         print(f"找到文件夹: {file_path.name} ({file_count} 个项目)")
 
 
                 
