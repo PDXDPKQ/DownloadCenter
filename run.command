@@ -32,7 +32,7 @@ echo "3. 提交更改..."
 git commit -m "1" || echo "提交失败或无更改可提交"
 
 echo "4. 推送到远程仓库..."
-git push
+git push --force
 
 echo "=========================="
 echo "执行完成！"

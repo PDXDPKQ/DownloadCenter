@@ -45,7 +45,7 @@
     },
     {
         "name": "run.command",
-        "size": "999 B"
+        "size": "1007 B"
     },
     {
         "name": "派蒙.jpg",
