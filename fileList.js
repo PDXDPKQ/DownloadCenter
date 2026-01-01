@@ -4,8 +4,8 @@
 
     const mockFiles = [
     {
-        "name": ".DS_Store",
-        "size": "6 KB"
+        "name": ".gitignore",
+        "size": "9 B"
     },
     {
         "name": "auto_push.bat",
