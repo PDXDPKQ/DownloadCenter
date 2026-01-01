@@ -32,6 +32,10 @@
         "size": "1 KB"
     },
     {
+        "name": "ignore.js",
+        "size": "273 B"
+    },
+    {
         "name": "index.html",
         "size": "18.7 KB"
     },
