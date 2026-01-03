@@ -17,7 +17,7 @@
     },
     {
         "name": "fileList.js",
-        "size": "1 KB"
+        "size": "2 KB"
     },
     {
         "name": "generate_filelist.py说明书.txt",
@@ -46,10 +46,6 @@
     {
         "name": "run.command",
         "size": "1007 B"
-    },
-    {
-        "name": "新建 文本文档.txt",
-        "size": "0 B"
     },
     {
         "name": "派蒙.jpg",
