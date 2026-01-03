@@ -21,7 +21,7 @@
     },
     {
         "name": "fileList.js",
-        "size": "1 KB"
+        "size": "2 KB"
     },
     {
         "name": "generate_filelist.py说明书.txt",
@@ -42,10 +42,6 @@
     {
         "name": "index.html",
         "size": "18.7 KB"
-    },
-    {
-        "name": "new.txt",
-        "size": "0 B"
     },
     {
         "name": "passwordMap.js",
