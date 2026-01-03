@@ -1,0 +1,23 @@
+生成此目录下文件列表
+
+
+命令行
+# 基本用法
+python generate_filelist.py -o files.js
+
+# 指定要排除的扩展名
+python generate_filelist.py -o files.js -e .py .js .tmp
+
+# 安静模式
+python generate_filelist.py -q
+
+# 自定义模式
+python generate_filelist.py
+
+
+
+作为模块使用
+from generate_filelist import generate_file_list_js
+
+# 生成文件列表
+generate_file_list_js("myFileList.js", exclude_extensions=[".py", ".js", ".tmp"])

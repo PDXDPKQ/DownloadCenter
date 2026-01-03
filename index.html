@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DownloadCenter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0 30px;
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #222222;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .info-box {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 40px;
+            border-left: 4px solid #4a6ee0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .info-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #4a6ee0;
+        }
+
+        .info-title i {
+            font-size: 1.2rem;
+        }
+
+        .file-list-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+
+        .list-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            background-color: #f8f9fa;
+            padding: 18px 24px;
+            font-weight: 600;
+            color: #555555;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .file-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            padding: 20px 24px;
+            border-bottom: 1px solid #f0f0f0;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .file-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-name {
+            font-weight: 500;
+            color: #333333;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .file-icon {
+            color: #4a6ee0;
+            font-size: 1.2rem;
+        }
+
+        .file-size {
+            color: #777777;
+            font-size: 0.95rem;
+        }
+
+        .download-btn {
+            background-color: #4a6ee0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 140px;
+            justify-self: end;
+        }
+
+        .download-btn:hover {
+            background-color: #3a5ed0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(58, 94, 208, 0.2);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 16px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #222222;
+        }
+
+        .modal-subtitle {
+            color: #666666;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+
+        .password-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .password-input-container {
+            position: relative;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            letter-spacing: 2px;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #4a6ee0;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #777777;
+            cursor: pointer;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .submit-btn, .cancel-btn {
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .submit-btn {
+            background-color: #4a6ee0;
+            color: white;
+        }
+
+        .submit-btn:hover {
+            background-color: #3a5ed0;
+        }
+
+        .cancel-btn {
+            background-color: #f0f0f0;
+            color: #333333;
+        }
+
+        .cancel-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .current-password-hint {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #666666;
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .password-hint {
+            font-weight: 600;
+            color: #4a6ee0;
+        }
+
+        .no-files {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999999;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #888888;
+            font-size: 0.9rem;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .list-header, .file-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .download-btn {
+                justify-self: start;
+                margin-top: 10px;
+            }
+            
+            .file-size {
+                font-size: 0.9rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .modal-content {
+                padding: 30px 20px;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DownloadCenter</h1>
+        <p class="subtitle"> </p>
+    </header>
+
+    <div class="info-box">
+        <div class="info-title">
+            <i class="fas fa-info-circle"></i>
+            <span> </span>
+        </div>
+        <p>啦啦~啦啦~啦啦啦啦~  库里~库里~库里库里</p>
+    </div>
+
+    <div class="file-list-container">
+        <div class="list-header">
+            <div>文件名</div>
+            <div>大小</div>
+            <div>操作</div>
+        </div>
+        
+        <div id="file-list">
+            <!-- 文件列表将在这里动态生成 -->
+        </div>
+    </div>
+
+    <div id="password-modal" class="password-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">请输入密码</h2>
+            <p class="modal-subtitle"></p>
+            
+            <div class="current-password-hint">
+                <span id="current-password-hint" class="password-hint">twgdh</span>
+            </div>
+            
+            <form id="password-form" class="password-form">
+                <div class="password-input-container">
+                    <input type="password" id="password-input" class="password-input" placeholder="请输入密码" required>
+                    <button type="button" id="password-toggle" class="password-toggle">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                
+                <div id="error-message" class="error-message">
+                    密码错误，请重试
+                </div>
+                
+                <div class="modal-buttons">
+                    <button type="submit" class="submit-btn">验证并下载</button>
+                    <button type="button" id="cancel-btn" class="cancel-btn">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p> </p>
+    </footer>
+
+	<script src="fileList.js"></script>
+    <script src="passwordMap.js"></script>
+	<script src="ignore.js"></script>
+	
+
+    <script>
+        // 模拟从目录获取的文件列表
+        // 在实际使用中，可以通过服务器端脚本获取真实目录文件列表
+
+
+        // 排除的扩展名和文件夹
+		// const excludedFiles = ['auto_push.bat','generate_filelist.py', 'generate_filelist.py说明书.txt', 'github提交方法.txt', 'github提交方法.png','auto_push.py','CNAME','.git','.DS_Store','run.command'];
+        const excludedExtensions = ['.js', '.css', '.html' ];
+        const excludedFolders = ['js', 'css'];
+
+
+
+        // 当前下载的文件和随机抽取的口令
+        let currentDownloadFile = null;
+        let currentPasswordKey = null;
+
+        // 模拟获取目录文件列表（过滤排除项）
+        function getFilteredFileList() {
+            // 在实际应用中，这里可以替换为从服务器获取真实文件列表的代码
+            // 模拟过滤过程
+            return mockFiles.filter(file => {
+                const extension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+                // 排除特定扩展名的文件
+                if (excludedExtensions.includes(extension) || excludedFiles.includes(file.name)) {
+                    return false;
+                }
+                
+                // 排除特定文件夹中的文件（这里模拟检查路径）
+                const path = file.name.toLowerCase();
+                if (excludedFolders.some(folder => path.includes(folder + '/'))) {
+                    return false;
+                }
+                
+                return true;
+            });
+        }
+
+        // 渲染文件列表
+        function renderFileList() {
+            const fileListElement = document.getElementById('file-list');
+            const files = getFilteredFileList();
+            
+            if (files.length === 0) {
+                fileListElement.innerHTML = '<div class="no-files"><i class="fas fa-folder-open fa-3x" style="margin-bottom: 15px;"></i><p>当前目录下没有可显示的文件</p></div>';
+                return;
+            }
+            
+            fileListElement.innerHTML = '';
+            
+            files.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                
+                // 根据文件类型设置图标
+                let fileIcon = 'fa-file';
+                const extension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+                if (extension === '.pdf') fileIcon = 'fa-file-pdf';
+                else if (extension === '.docx' || extension === '.doc') fileIcon = 'fa-file-word';
+                else if (extension === '.xlsx' || extension === '.xls') fileIcon = 'fa-file-excel';
+                else if (extension === '.pptx' || extension === '.ppt') fileIcon = 'fa-file-powerpoint';
+                else if (extension === '.csv') fileIcon = 'fa-file-csv';
+                
+                fileItem.innerHTML = `
+                    <div class="file-name">
+                        <i class="fas ${fileIcon} file-icon"></i>
+                        <span>${file.name}</span>
+                    </div>
+                    <div class="file-size">${file.size}</div>
+                    <div>
+                        <button class="download-btn" data-file="${file.name}">
+                            <i class="fas fa-download"></i> 下载
+                        </button>
+                    </div>
+                `;
+                
+                fileListElement.appendChild(fileItem);
+            });
+            
+            // 为下载按钮添加事件监听器
+            document.querySelectorAll('.download-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const fileName = this.getAttribute('data-file');
+                    initiateDownload(fileName);
+                });
+            });
+        }
+
+        // 初始化下载流程
+        function initiateDownload(fileName) {
+            // 随机抽取一个口令
+            const passwordKeys = Object.keys(passwordMap);
+            currentPasswordKey = passwordKeys[Math.floor(Math.random() * passwordKeys.length)];
+            
+            // 设置当前下载的文件
+            currentDownloadFile = fileName;
+            
+            // 显示口令提示
+            document.getElementById('current-password-hint').textContent = currentPasswordKey;
+            
+            // 显示密码输入模态框
+            document.getElementById('password-modal').classList.add('active');
+            document.getElementById('password-input').focus();
+            document.getElementById('error-message').classList.remove('show');
+        }
+
+        // 验证密码并下载
+        function validatePasswordAndDownload(password) {
+            const correctPassword = passwordMap[currentPasswordKey];
+            
+            if (password === correctPassword) {
+                // 密码正确，触发下载
+                triggerDownload(currentDownloadFile);
+                
+                // 关闭模态框
+                document.getElementById('password-modal').classList.remove('active');
+                document.getElementById('password-input').value = '';
+                
+                // 显示成功消息（可选）
+                alert(`密码验证成功！开始下载 "${currentDownloadFile}"`);
+            } else {
+                // 密码错误
+                document.getElementById('error-message').classList.add('show');
+                document.getElementById('password-input').value = '';
+                document.getElementById('password-input').focus();
+            }
+        }
+
+        // 触发文件下载（模拟）
+        function triggerDownload(fileName) {
+            // 在实际应用中，这里应该是一个真实的文件下载链接
+            // 这里我们模拟下载过程
+            console.log(`开始下载文件: ${fileName}`);
+            const fileUrl = './' + fileName;
+			
+            // 创建临时下载链接
+            const link = document.createElement('a');
+            link.href = fileUrl; // 实际应用中应为真实文件URL
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 渲染文件列表
+            renderFileList();
+            
+            // 密码输入框显示/隐藏切换
+            document.getElementById('password-toggle').addEventListener('click', function() {
+                const passwordInput = document.getElementById('password-input');
+                const icon = this.querySelector('i');
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+            
+            // 密码表单提交
+            document.getElementById('password-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const password = document.getElementById('password-input').value.trim();
+                
+                if (password) {
+                    validatePasswordAndDownload(password);
+                }
+            });
+            
+            // 取消按钮
+            document.getElementById('cancel-btn').addEventListener('click', function() {
+                document.getElementById('password-modal').classList.remove('active');
+                document.getElementById('password-input').value = '';
+                document.getElementById('error-message').classList.remove('show');
+            });
+            
+            // 点击模态框外部关闭
+            document.getElementById('password-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.getElementById('password-input').value = '';
+                    document.getElementById('error-message').classList.remove('show');
+                }
+            });
+            
+            // 按ESC键关闭模态框
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && document.getElementById('password-modal').classList.contains('active')) {
+                    document.getElementById('password-modal').classList.remove('active');
+                    document.getElementById('password-input').value = '';
+                    document.getElementById('error-message').classList.remove('show');
+                }
+            });
+        });
+
+        // 添加自定义口令功能（可以通过控制台调用）
+        window.addPasswordPair = function(key, value) {
+            passwordMap[key] = value;
+            console.log(`已添加口令对: "${key}" -> "${value}"`);
+            console.log('当前口令库:', passwordMap);
+        };
+    </script>
+</body>
+</html>
