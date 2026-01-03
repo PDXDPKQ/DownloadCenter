@@ -1,8 +1,12 @@
 // 自动生成的文件列表
-    // 生成时间: 3.13.11
-    // 目录: E:\HTML\DownloadCenter
+    // 生成时间: 3.14.2
+    // 目录: /Users/pdxdpkq/DownloadCenter
 
     const mockFiles = [
+    {
+        "name": ".DS_Store",
+        "size": "8 KB"
+    },
     {
         "name": ".gitignore",
         "size": "9 B"
@@ -40,6 +44,10 @@
         "size": "18.7 KB"
     },
     {
+        "name": "new.txt",
+        "size": "0 B"
+    },
+    {
         "name": "passwordMap.js",
         "size": "342 B"
     },
@@ -54,6 +62,14 @@
     {
         "name": "警告.md",
         "size": "47 B"
+    },
+    {
+        "name": "鼠标指针-苍蝇主题包.zip",
+        "size": "237.6 KB"
+    },
+    {
+        "name": "鼠标指针-蟑螂256.zip",
+        "size": "3.1 MB"
     },
     {
         "name": "鼠标指针美化图标.zip",
